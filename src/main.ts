@@ -1,15 +1,14 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { CommandFactory } from 'nest-commander';
+import { Logger } from '@nestjs/common';
+import { AppModule } from 'src/app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  await app.listen(process.env.PORT ?? 3000);
+  await CommandFactory.run(AppModule, new Logger());
+
+  console.log('Thanks!');
 }
-bootstrap()
-  .then(() => {
-    console.log("We doin' dis");
-  })
-  .catch((err) => {
-    console.error('oh no!');
-    console.error(err);
-  });
+
+bootstrap().catch((err) => {
+  console.error('oh no!');
+  console.error(err);
+});
