@@ -28,9 +28,7 @@ export class NethysActionsService implements Actionable {
       await new Promise((res, rej) => {
         this.webScraperService.scrape(NETHYS_TARGETS).subscribe({
           next: (data) => {
-            const fileName = `file-${this.num++}`;
-            this.logger.log(`Saving ${fileName}`);
-            this.fileManagerService.saveFile(fileName, data);
+            this.fileManagerService.saveFile(`file-${this.num++}`, data);
           },
           error: (err) => {
             const message = `Something error occurred: ${err}`;
