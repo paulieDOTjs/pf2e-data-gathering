@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Client as ElasticSearchClient } from '@elastic/elasticsearch';
-import { from, map, mergeMap, of } from 'rxjs';
+import { from, mergeMap, of } from 'rxjs';
 
 @Injectable()
 export class WebScraperService {
@@ -15,8 +15,7 @@ export class WebScraperService {
   scrape(targets: Readonly<string[]>) {
     return from(targets).pipe(
       mergeMap((target) => this.hitElastic(target)),
-      map((response) => response.hits.hits),
-      mergeMap((hits) => of(...hits)),
+      mergeMap((response) => of(...response.hits.hits)),
     );
   }
 
